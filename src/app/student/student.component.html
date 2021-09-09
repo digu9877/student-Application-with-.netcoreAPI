@@ -1,0 +1,193 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">To-Do List</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+      </ul>
+      <form class="d-flex">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+        />
+        <button class="btn btn-outline-light" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+
+
+
+<!-- <div class="jumbotron" style="background-color: gray;">
+  <div class="container">
+    <h1 class="display-4">Fluid jumbotron</h1>
+    <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+  </div>
+</div> -->
+
+
+
+
+<div class="text-center my-5">
+  <h1 class="title display-4">Manage Student</h1>
+</div>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-5">
+      <form
+        action=""
+        autocomplete="off"
+        novalidate
+        #form="ngForm"
+        (submit)="onsubmit(form)"
+      >
+        <div class="modal-body">
+          <input type="hidden" name="id" [value]="service.formData.id" />
+          <div class="">
+            <label for="exampleInputEmail1" class="form-label"
+              >Student Name</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              placeholder="Enter Your Name"
+              name="name"
+              #name="ngModel"
+              [(ngModel)]="service.formData.name"
+              required
+              [class.invalid]="name.invalid && name.touched"
+
+            />
+          </div>
+
+          <div  *ngIf="name.invalid && name.touched ">
+            <div *ngIf="name.errors.required" style="color: red;">Name is Required**</div>
+            <!-- <div *ngIf="name.errors.pattern">enter valid name</div> -->
+          </div>
+
+          <div class="mt-3">
+            <label for="exampleInputPassword1" class="form-label"
+              >Enrollment No.</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="enrollment"
+              name="enrollment"
+              placeholder="i.e. IU174105000"
+              #enrollment="ngModel"
+              [(ngModel)]="service.formData.enrollment"
+              required
+              pattern="[IU]+[0-9]{10}$"
+              [class.invalid]="enrollment.invalid && enrollment.touched"
+            />
+          </div>
+
+          <div  *ngIf="enrollment.invalid && enrollment.touched ">
+            <div *ngIf="enrollment.errors.required" style="color: red;">Enrollment Number is Required**</div>
+            <div *ngIf="enrollment.errors.pattern" style="color: red;">Please Enter a valid Enrollment**</div>
+          </div>
+
+          <div class="mt-3">
+            <label for="exampleInputPassword1" class="form-label">Branch</label>
+            <input
+              type="text"
+              class="form-control"
+              id="branch"
+              name="branch"
+              placeholder="Enter Your Branch "
+              #branch="ngModel"
+              [(ngModel)]="service.formData.branch"
+              required
+              [class.invalid]="branch.invalid && branch.touched"
+            />
+          </div>
+          <div *ngIf="branch.invalid && branch.touched ">
+            <div *ngIf="branch.errors.required" style="color: red;">Branch is Required**</div>
+          </div>
+
+        </div>
+        <div class="modal-footer justify-content-center mt-3">
+          <button
+            type="submit"
+            class="btn btn-outline-dark btn-block"
+            [disabled]="form.invalid"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="col-lg-1"></div>
+    <div class="col-lg-6">
+      <div class="container">
+        <table class="table" id="myTable">
+          <thead>
+            <tr>
+              <th>Student Id</th>
+              <th>Student Name</th>
+              <th>Enroll. No.</th>
+              <th>Branch</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <div *ngIf="service.list; then thenBlock; else elseBlock"></div>
+            <ng-template #thenBlock>
+              <tr *ngFor="let student of service.list">
+                <td (click)="populateForm(student)">{{ student.id }}</td>
+                <td (click)="populateForm(student)">{{ student.name }}</td>
+                <td (click)="populateForm(student)">
+                  {{ student.enrollment }}
+                </td>
+                <td (click)="populateForm(student)">{{ student.branch }}</td>
+                <td>
+                  <i
+                    class="fas fa-trash-alt fa-lg text-danger"
+                    (click)="onDelete(student.id)"
+                  ></i>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template #elseBlock>
+              <tr>
+                <td class="text-center" colspan="5">No Records Available</td>
+              </tr>
+            </ng-template>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+$(document).ready( function () {
+  $('#myTable').DataTable();
+} );
+</script>
